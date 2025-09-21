@@ -1,72 +1,41 @@
 public class House {
-    private final String address;
-    private final int floors;
-    private final int area;
-    private final boolean hasGarage;
-    private final boolean hasGarden;
-    private final int price;
+    private final String walls;
+    private final String roof;
+    private final int windows;
 
     private House(HouseBuilder builder) {
-        this.address = builder.address;
-        this.floors = builder.floors;
-        this.area = builder.area;
-        this.hasGarage = builder.hasGarage;
-        this.hasGarden = builder.hasGarden;
-        this.price = builder.price;
+        this.walls = builder.walls;
+        this.roof = builder.roof;
+        this.windows = builder.windows;
+    }
+
+    @Override
+    public String toString() {
+        return "House [walls=" + walls + ", roof=" + roof + ", windows=" + windows + "]";
     }
 
     public static class HouseBuilder {
-        private String address;
-        private int floors;
-        private int area;
-        private boolean hasGarage;
-        private boolean hasGarden;
-        private int price;
+        private String walls;
+        private String roof;
+        private int windows;
 
-        public HouseBuilder setAddress(String address) {
-            this.address = address;
+        public HouseBuilder setWalls(String walls) {
+            this.walls = walls;
             return this;
         }
 
-        public HouseBuilder setFloors(int floors) {
-            this.floors = floors;
+        public HouseBuilder setRoof(String roof) {
+            this.roof = roof;
             return this;
         }
 
-        public HouseBuilder setArea(int area) {
-            this.area = area;
-            return this;
-        }
-
-        public HouseBuilder setHasGarage(boolean hasGarage) {
-            this.hasGarage = hasGarage;
-            return this;
-        }
-
-        public HouseBuilder setHasGarden(boolean hasGarden) {
-            this.hasGarden = hasGarden;
-            return this;
-        }
-
-        public HouseBuilder setPrice(int price) {
-            this.price = price;
+        public HouseBuilder setWindows(int windows) {
+            this.windows = windows;
             return this;
         }
 
         public House build() {
             return new House(this);
         }
-    }
-
-    @Override
-    public String toString() {
-        return "House {" +
-                "address='" + address + '\'' +
-                ", floors=" + floors +
-                ", area=" + area + "m²" +
-                ", hasGarage=" + hasGarage +
-                ", hasGarden=" + hasGarden +
-                ", price=$" + price +
-                '}';
     }
 }
