@@ -1,0 +1,137 @@
+public class ClassicHouse implements HouseType {
+    @Override
+    public String getType() {
+        return "Classic House";
+    }
+}
+
+
+public class ClassicHouseFactory extends HouseFactory {
+    @Override
+    public HouseType createHouse() {
+        return new ClassicHouse();
+    }
+
+    @Override
+    public Roof createRoof() {
+        return new ClassicRoof();
+    }
+}
+
+
+public class ClassicRoof implements Roof {
+    @Override
+    public String getMaterial() {
+        return "Tile Roof";
+    }
+}
+
+
+public class House {
+    private final String walls;
+    private final String roof;
+    private final int windows;
+
+    private House(HouseBuilder builder) {
+        this.walls = builder.walls;
+        this.roof = builder.roof;
+        this.windows = builder.windows;
+    }
+
+    @Override
+    public String toString() {
+        return "House [walls=" + walls + ", roof=" + roof + ", windows=" + windows + "]";
+    }
+
+    public static class HouseBuilder {
+        private String walls;
+        private String roof;
+        private int windows;
+
+        public HouseBuilder setWalls(String walls) {
+            this.walls = walls;
+            return this;
+        }
+
+        public HouseBuilder setRoof(String roof) {
+            this.roof = roof;
+            return this;
+        }
+
+        public HouseBuilder setWindows(int windows) {
+            this.windows = windows;
+            return this;
+        }
+
+        public House build() {
+            return new House(this);
+        }
+    }
+}
+
+public abstract class HouseFactory {
+    public abstract HouseType createHouse();
+    public abstract Roof createRoof();
+}
+
+
+public interface HouseType {
+    String getType();
+}
+
+public class Main {
+    public static void main(String[] args) {
+
+        House house = new House.HouseBuilder()
+                .setWalls("Brick Walls")
+                .setRoof("Concrete Roof")
+                .setWindows(4)
+                .build();
+
+        System.out.println("Built with Builder Pattern: " + house);
+
+        HouseFactory modernFactory = new ModernHouseFactory();
+        HouseFactory classicFactory = new ClassicHouseFactory();
+
+        HouseType modernHouse = modernFactory.createHouse();
+        Roof modernRoof = modernFactory.createRoof();
+
+        HouseType classicHouse = classicFactory.createHouse();
+        Roof classicRoof = classicFactory.createRoof();
+
+        System.out.println("Abstract Factory - " + modernHouse.getType() + " with " + modernRoof.getMaterial());
+        System.out.println("Abstract Factory - " + classicHouse.getType() + " with " + classicRoof.getMaterial());
+    }
+}
+
+public class ModernHouse implements HouseType {
+    @Override
+    public String getType() {
+        return "Modern House";
+    }
+}
+
+
+public class ModernHouseFactory extends HouseFactory {
+    @Override
+    public HouseType createHouse() {
+        return new ModernHouse();
+    }
+
+    @Override
+    public Roof createRoof() {
+        return new ModernRoof();
+    }
+}
+
+public class ModernRoof implements Roof {
+    @Override
+    public String getMaterial() {
+        return "Glass Roof";
+    }
+}
+
+
+public interface Roof {
+    String getMaterial();
+}
